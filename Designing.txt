@@ -1,0 +1,17 @@
+#Designing
+Commands For Schema visit-> .schema(if db is already opened in database)
+.quit(to exit from database)
+.exit(to exit from schema)
+Creating schema
+#Normalising the data (minimise the data with relations and divided into different table through keys)
+Keyword for creation->
+CREATE TABLE "table_name"( 
+"attribute_name1",
+"attribute_name2"
+);
+Data Type and Storage Classes
+1.)NULL(void)
+2.)INTEGER(number)
+3.)REAL(decimal)
+4.)TEXT(char)
+5.)BLOB(binary large object)
