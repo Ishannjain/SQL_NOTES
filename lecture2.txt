@@ -1,0 +1,7 @@
+#Designing
+Commands
+.schema
+.quit
+.exit
+Creating schema
+Normalising the data

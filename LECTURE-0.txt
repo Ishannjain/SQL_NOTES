@@ -1,0 +1,40 @@
+Name:Querying
+#DATABASE
+A collection of data organised for creating reading,updating and deleting
+
+#DataBase Managament System
+software via which you can interact with a database
+example:MYSQL,Oracle,PostgreSQL,SQLite
+
+#SQL(structured Query Language)
+A language via which you can create,read,update and delete data in a database.
+#ls->longlist.db
+.\sqlite3 longlist.db(it is just a name of database)
+
+#KEYWORDS
+1.)SELECT
+2.)LIMIT
+3.)WHERE
+4.)NULL
+Operator=> AND,OR,()
+5.)LIKE
+Operator=>%
+Range Conditions
+=>BETWEEN__AND__
+6.)Order BY
+=>order by asc and order by desc
+#Aggregate Function(combine together)
+i)COUNT
+ii)AVG
+->ROUND
+->AS
+iii)MIN
+iv)MAX
+v)SUM
+
+SELECT COLUMN FROM TABLE
+WHERE Conditions
+ORDER BY COLUMN
+LIMIT NUMBER;
+COMMAND=>
+sqlite3 filename
