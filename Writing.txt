@@ -1,0 +1,13 @@
+                                                                       #Data Manipulation Keywords
+1.)CREATE
+2.)READ
+3.)UPDATE
+4.)DELETE
+                                                                               #INSERT 
+COMMAND->
+INSERT INTO TABLE_NAME(COL0,COL1.....)
+VALUES
+(VAL0,....);
+.read sql_name.sql(to read the the database in terminal)
+                                                                            
+                                                                              
