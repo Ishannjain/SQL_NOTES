@@ -1,17 +1,42 @@
-#Designing
 Commands For Schema visit-> .schema(if db is already opened in database)
-.quit(to exit from database)
+.quit(to exit from sqlite prompt)
+.read  db_name.sql (to read the data)
 .exit(to exit from schema)
-Creating schema
-#Normalising the data (minimise the data with relations and divided into different table through keys)
+DROP Keyword->to delete the table from database
+                                    
+                                          #Normalising the data
+(minimise the data with relations and divided into different table through keys)
 Keyword for creation->
 CREATE TABLE "table_name"( 
 "attribute_name1",
 "attribute_name2"
 );
-Data Type and Storage Classes
+                                     #Data Type and Storage Classes
 1.)NULL(void)
 2.)INTEGER(number)
 3.)REAL(decimal)
 4.)TEXT(char)
 5.)BLOB(binary large object)
+                                              #Type Affinites
+It is possible to specify the data type of a column while creating a table.
+However, columns in SQLite don’t always store one particular data type. They are said to have type affinities, meaning that they try to convert an input value into the type they have an affinity for.
+1.)TEXT
+2.)NUMERIC
+3.)INTEGER
+4.)REAL
+5.)BLOB
+                                            #Table Constraints
+1.)Primary Key
+2.)Foreign Key
+sqlite automatically give us a primary key if not assign
+                                            #Column Constraints
+1.)CHECK
+2.)DEFAULT
+3.)UNIQUE
+4.)NOT NULL
+                                              #Altering Table
+ALTER TABLE ->Keyword(changes in table)
+1.)ADD COLUMN 
+2.)RENAME COLUMN 
+3.)DROP COLUMN
+
