@@ -1,13 +1,33 @@
-                                                                       #Data Manipulation Keywords
+                                #Data Manipulation Keywords
 1.)CREATE
 2.)READ
 3.)UPDATE
 4.)DELETE
-                                                                               #INSERT 
+                                      #INSERT 
 COMMAND->
 INSERT INTO TABLE_NAME(COL0,COL1.....)
 VALUES
 (VAL0,....);
 .read sql_name.sql(to read the the database in terminal)
-                                                                            
-                                                                              
+rm sql.db(to remove the database)
+.import(lets you csv 
+.import --csv --skip 1 mfa.csv(example)
+.import --csv mfa.csv temp
+                                      #DELETE                                                    
+sql command=> DELETE FROM TABLE WHERE CONDITION;
+#FOREIGN CONSTRAINTS (to deletion of data from table through foreign key)
+ON DELETE CASCADE(DELETE ALL RELATED TO IT)
+ON DELETE RESTRICT
+ON DELETE NO ACTION
+ON DELETE SET NULL
+ON DELETE SET DEFAULT
+                                        #UPDATE
+COMMAND
+UPDATE TABLE
+SET COL1=VAL1M...
+WHERE CONDITION
+Some other function in sqlite
+1.)trim(to remove leading and trailing whitespaces)
+2.)upper(to capitalization)
+3.)Scalar function(https://www.sqlite.org/lang_corefunc.html)
+                                      #Triggers
