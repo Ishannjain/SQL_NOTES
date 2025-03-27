@@ -1,0 +1,66 @@
+                                       #VIEW
+->A virtual table defined by a query
+A regular view exists forever in our database schema.
+views is not taking any space.
+Views are useful for:
+1.)Simplifying: putting together data from different tables to be queried more simply,
+2.)Aggregating: running aggregate functions, like finding the sum, and storing the results,
+3.)Partitioning: dividing data into logical pieces,
+4.)Securing: hiding columns that should be kept secure. While there are other ways in which views can be useful, in this lecture we will focus on the above four.
+                                    #Simplifying
+Defination:Putting together data from different tables to be queried more simply.
+command=>
+CREATE VIEW NAME_TABLE AS
+SELECT...;
+example:
+CREATE VIEW "longlist" AS
+SELECT "name", "title" FROM "authors"
+JOIN "authored" ON "authors"."id" = "authored"."author_id"
+JOIN "books" ON "books"."id" = "authored"."book_id";
+                                    #Aggregating
+Defination:Running aggregate functions, like finding the sum, and storing the results.
+COMMAND=>
+CREATE VIEW TABLE_NAME AS 
+SELECT..;
+EXAMPLE:
+CREATE VIEW "average_book_ratings" AS
+SELECT "book_id" AS "id", "title", "year", ROUND(AVG("rating"), 2) AS "rating" 
+FROM "ratings"
+JOIN "books" ON "ratings"."book_id" = "books"."id"
+GROUP BY "book_id";
+                                 #Temporary Views
+A temporary view exists for the duration of our connection with the database. 
+COMMAND=>
+CREATE TEMPORARY VIEW TABLE_NAME AS
+SELECT...; 
+                               #Common Table Expression(CTE)
+A CTE is a view that exists for a single query alone.
+COMMAND=>
+WITH NEW_TABLE_NAME AS(
+SELECT...
+)
+SELECT .. FROM NEW_TABLE_NAME;
+Example:
+WITH "average_book_ratings" AS (
+    SELECT "book_id", "title", "year", ROUND(AVG("rating"), 2) AS "rating" FROM "ratings"
+    JOIN "books" ON "ratings"."book_id" = "books"."id"
+    GROUP BY "book_id"
+)
+SELECT "year" ROUND(AVG("rating"), 2) AS "rating" FROM "average_book_ratings"
+GROUP BY "year";
+                               #Partitioning
+Defination:Dividing data into logical pieces.
+COMMAND=>
+CREATE  VIEW TABLE_NAME AS
+SELECT...;
+Example:
+CREATE VIEW "2022" AS
+SELECT "id", "title" FROM "books"
+WHERE "year" = 2022;
+Q.)Can views be updated?
+No, because views do not have any data in the way that tables do.
+Views actually pull data from the underlying tables each time they are queried.
+This means that when an underlying table is updated, the next time the view is queried, 
+it will display updated data from the table!
+
+
