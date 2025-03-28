@@ -6,7 +6,7 @@ Views are useful for:
 1.)Simplifying: putting together data from different tables to be queried more simply,
 2.)Aggregating: running aggregate functions, like finding the sum, and storing the results,
 3.)Partitioning: dividing data into logical pieces,
-4.)Securing: hiding columns that should be kept secure. While there are other ways in which views can be useful, in this lecture we will focus on the above four.
+4.)Securing: hiding columns that should be kept secure. 
                                     #Simplifying
 Defination:Putting together data from different tables to be queried more simply.
 command=>
@@ -62,5 +62,28 @@ No, because views do not have any data in the way that tables do.
 Views actually pull data from the underlying tables each time they are queried.
 This means that when an underlying table is updated, the next time the view is queried, 
 it will display updated data from the table!
-
-
+                                #Securing
+Defination:hiding columns that should be kept secure.
+Example:
+CREATE VIEW "analysis" AS
+SELECT "id", "origin", "destination", 'Anonymous' AS "rider" 
+FROM "rides";
+Here,riders we need to secure that whay we named them anonymous
+                              #Soft Deletion
+A soft deletion involves marking a row as deleted instead of removing it from the table.
+->because we cant modify a view table that why we use trigger to modify it.
+COMMAND=>
+CREATE TRIGGER TABLE_NAME
+INSTEAD OF DELETE ON VIEW_TABLE_NAME
+FOR EACH ROW
+BEGIN
+...;
+END;
+Example:
+CREATE TRIGGER "delete"
+INSTEAD OF DELETE ON "current_collections"
+FOR EACH ROW
+BEGIN
+    UPDATE "collections" SET "deleted" = 1 
+    WHERE "id" = OLD."id";
+END;
