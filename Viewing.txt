@@ -1,4 +1,6 @@
                                        #VIEW
+Q.)why we use view in sql
+Views can be used as security mechanisms by letting users access data through the view, without granting users permissions to directly access the underlying tables of the query. Views can be used to provide a backward compatible interface to emulate a table that used to exist but whose schema has changed.
 ->A virtual table defined by a query
 A regular view exists forever in our database schema.
 views is not taking any space.
