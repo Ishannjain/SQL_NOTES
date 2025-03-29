@@ -1,7 +1,10 @@
 To find out the Run Time of the queries command=>
 .timer on
-#INDEX
+                                       #INDEX
+Q.)Why Indexes in SQL are Used? 
+->Improved Query Performance: The primary reason for using indexes is to accelerate query processing. Indexes can drastically reduce the amount of data the server needs to examine. Efficient Data Access: Indexes provide a quick way to access row data for SELECT statements.21
 A structure used to speed up the retrievel of rows from a table
+->indexes is also stored in schema
 command=>
 CREATE INDEX name
 ON TABLE (COL0,...);
@@ -9,3 +12,63 @@ example:
 CREATE INDEX "title_index" ON "movies" ("title");
 EXPLAIN QUERY PLAN
 (queries);
+To understand what kind of index could help speed this query up, we can run EXPLAIN QUERY PLAN ahead of this query again. 
+                                   #Covering Index
+An index in which queried data can be retrieved from the index itself.
+                                  #SPACE TRADE-OFF AND TIME TRADE-OFF
+B-tree use to organisize the data structure 
+#B-Tree
+A balanced tree structure commonly used to create an index
+NODE,ROOT,CHILD NODE,LEAF NODE
+B-Tree implies a Binary Search Algorithm to reduces the search time and space is also useful in case of search.
+                                   #PARTIAL INDEX
+This is an index that includes only a subset of rows from a table, allowing us to save some space that a full index would occupy.
+COMMAND=>
+CREATE INDEX name
+ON TABLE (COL0,...)
+WHERE CONDITION;(we adding condition in which col we need to perform our index part)
+example:
+CREATE INDEX "recents" ON "movies" ("titles")
+WHERE "year" = 2023;
+->same goes to explain query plan
+                                     #VACCUM
+COMMMAND=>
+VACCUM;t
+There are ways to delete unused space in our database. SQLite allows us to “vacuum” data — this cleans up previously deleted data (that is actually not deleted, but just marked as space being available for the next INSERT).
+
+To find the size of movies.db on the terminal, we can use a Unix command
+COMMAND=> du -b database_name.db
+                                  #CONCURRENCY
+we have seen how to optimize single queries. Now, we will look at how to allow not just one query, but multiple at a time.
+1.)TRANSACTIONS
+A unit of work in database.
+Transactions have some properties, which can be remembered using the acronym ACID:
+atomicity: can’t be broken down into smaller pieces,
+consistency: should not violate a database constraint,
+isolation: if multiple users access a database, their transactions cannot interfere with each other,
+durability: in case of any failure within the database, all data changed by transactions will remain.
+COMMAND=>
+BEGIN TRANSACTIONS;
+...
+COMMIT;
+EXAMPLE:BEGIN TRANSACTION;
+UPDATE "accounts" SET "balance" = "balance" + 10 WHERE "id" = 2;
+UPDATE "accounts" SET "balance" = "balance" - 10 WHERE "id" = 1;
+COMMIT;
+ROLLBACK;
+EXAMPLE:BEGIN TRANSACTION;
+UPDATE "accounts" SET "balance" = "balance" + 10 WHERE "id" = 2;
+UPDATE "accounts" SET "balance" = "balance" - 10 WHERE "id" = 1; -- Invokes constraint error
+ROLLBACK;
+->Notice the UPDATE statements are written in between the commands to begin the transaction and to commit it. If we execute the query after writing the UPDATE statements, but without committing, neither of the two UPDATE statements will be run! This helps keep the transaction atomic. By updating our table in this way, we are unable to see the intermediate steps.
+->The way we implement reverting the transaction is using ROLLBACK. Once we begin a transaction and write some SQL statements, if any of them fail, we can end it with a ROLLBACK to revert all values to their pre-transaction state. This helps keep transactions consistent.
+2.)RACE CONDITION
+->Transactions can help guard against race conditions.
+->A race condition occurs when multiple entities simultaneously access and make decisions based on a shared value, potentially causing inconsistencies in the database. Unresolved race conditions can be exploited by hackers to manipulate the database.
+->In the lecture, an example of a race condition is discussed wherein two users working together can exploit momentary inconsistencies in the database to rob the bank.
+->However, transactions are processed in isolation to avoid the inconsistencies in the first place. Each transaction dealing with similar data from our database will be processed sequentially. This helps prevent the inconsistencies that an adversarial attack can exploit.
+->To make transactions sequential, SQLite and other database management systems use locks on databases. A table in a database could be in a few different states:
+3.)LOCKS
+UNLOCKED: this is the default state when no user is accessing the database,
+SHARED: when a transaction is reading data from the database, it obtains shared lock that allows other transactions to read simultaneously from the database,
+EXCLUSIVE: if a transaction needs to write or update data, it obtains an exclusive lock on the database that does not allow other transactions to occur at the same time (not even a read)
