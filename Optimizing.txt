@@ -1,0 +1,11 @@
+To find out the Run Time of the queries command=>
+.timer on
+#INDEX
+A structure used to speed up the retrievel of rows from a table
+command=>
+CREATE INDEX name
+ON TABLE (COL0,...);
+example:
+CREATE INDEX "title_index" ON "movies" ("title");
+EXPLAIN QUERY PLAN
+(queries);
