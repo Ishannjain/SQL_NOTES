@@ -72,3 +72,26 @@ COMMAND=>
 MODIFY CONDITION;
 ->ALTER TABLE `stations` 
 MODIFY `line` ENUM('blue', 'green', 'orange', 'red', 'silver') NOT NULL;
+#STORED PROCEDURES
+Stored procedures are a way to automate SQL statements and run them repeatedly.
+COMMAND=>
+CREATE PROCEDURE NAME
+BEGIN
+...
+END;
+
+Before we create a stored procedure, we need to change the delimited from ; to something else. Unlike SQLite, where we could type in multiple statements between a BEGIN and END (which we need for a stored procedure here) and end them with a ;, MySQL prematurely ends the statement when it encounters a ;.
+
+delimiter //
+CALL PROCEDURE_NAME;
+EXAMPLE:
+delimiter //
+CREATE PROCEDURE `sell`(IN `sold_id` INT)
+BEGIN
+    UPDATE `collections` SET `deleted` = 1 
+    WHERE `id` = `sold_id`;
+    INSERT INTO `transactions` (`title`, `action`)
+    VALUES ((SELECT `title` FROM `collections` WHERE `id` = `sold_id`), 'sold');
+END//
+delimiter ;
+                                             #POSTGRESQL
