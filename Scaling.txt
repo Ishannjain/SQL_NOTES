@@ -1,1 +1,74 @@
+                                              #SCALING
+Scalability is the ability to increase or decrease the capacity of an application or database to meet demand.
+                                               #MYSQL
+COMMAND=>
+mysql -u root -h 127.0.0.1 -P 3306 -p
+->In this terminal command, -u indicates the user. We provide the user we want to connect to the database as — root (synonymous with database admin, in this case).
+->127.0.0.1 is the address of local host on the internet (our own computer).
+->3306 is the port we want to connect to, and this is the default port where MySQL is hosted. Think of the combination of host and port as the address of the database we are trying to connect to!
+->-p at the end of the command indicates that we want to be prompted for a password when connecting.
 
+COMMANDS=>
+SHOW DATABASES;
+CREATE DATABASE `mbta`;
+USE `mbta`;
+EXAMPLE:
+CREATE TABLE `cards` (
+    `id` INT AUTO_INCREMENT,
+    PRIMARY KEY(`id`)
+);
+DESCRIBE `cards`;
+#DATETYPE OF INTEGER
+INT
+BIGINT
+SMALLINT
+MEDIUMINT
+TNIYINT
+#DATATYPE OF STRING
+CHAR() 
+VARCHAR()
+#DATATYPE OF TEXT
+TINYTEXT
+TEXT
+MEDIUMTEXT
+LONGTEXT
+#OTHER DATATYPES
+BLOB
+ENUM
+SET
+MySQL also provides two other text types: ENUM and SET. Enum restricts a column to a single predefined option from a list of options we provide. For example, shirt sizes could be enumerated to M, L, XL and so on. A set allows for multiple options to be stored in a single cell, useful for scenarios like movie genres.
+EXAMPLES:
+CREATE TABLE `stations` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(32) NOT NULL UNIQUE,
+    `line` ENUM('blue', 'green', 'orange', 'red') NOT NULL,
+    PRIMARY KEY(`id`)
+);
+CREATE TABLE `swipes` (
+    `id` INT AUTO_INCREMENT,
+    `card_id` INT,
+    `station_id` INT,
+    `type` ENUM('enter', 'exit', 'deposit') NOT NULL,
+    `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `amount` DECIMAL(5,2) NOT NULL CHECK(`amount` != 0),
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`station_id`) REFERENCES `stations`(`id`),
+    FOREIGN KEY(`card_id`) REFERENCES `cards`(`id`)
+);
+#EXPLICIT TYPES
+DATE
+TIME(fsp)
+DATETIME(fsp)
+TIMESTAMP(fsp)
+YEAR(fsp)
+#DATATYPE FOR REAL NUMBERS
+FLOAT(4 BYTE SIZE)
+DOUBLE PRECISION(8 BYTE SIZE)
+DECIMAL(DIGIT,AFTER_DECIMAL)
+#ALTER TABLE
+EXAMPLE:
+COMMAND=>
+->ALTER TABLE TABLE_NAME
+MODIFY CONDITION;
+->ALTER TABLE `stations` 
+MODIFY `line` ENUM('blue', 'green', 'orange', 'red', 'silver') NOT NULL;
