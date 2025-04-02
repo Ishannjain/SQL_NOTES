@@ -95,3 +95,66 @@ BEGIN
 END//
 delimiter ;
                                              #POSTGRESQL
+#DataType of integer
+SMALLINT(2 byte size)
+INT(4 byte size)
+BIGINT(8 bit size)
+#DataType of Serial
+SMALLSERIAL
+SERIAL
+BIGSERIAL
+COMMAND=>
+psql postgresql://postgres@127.0.0.1:5432/postgres
+\l for show database
+\c use database
+\dt datatable
+\d
+CREATE TYPE "swipe_type" AS ENUM('enter', 'exit', 'deposit'); for ENUM
+Date and time is similar like dbms
+TIMESTAMP(p)
+DATE
+TIME(p)
+INTERVAL(p)
+REAL NUMBERS
+MONEY
+NUMERIC(precision,scale)
+\q for quit
+                                         #SCALING 
+#FEATURES
+#VERTICAL Scaling
+->Increasing capacity by increasing a server's computing power.
+#HORIZONTAL SCALING
+->Increasing capacity by distributing load across multiple servers.
+#REPLICATION
+->Keeping copies of a database on multiple servers.
+TYPES OF REPLICATION
+1.)SINGLE LEADER
+2.)MULTI LEADER
+3.)LEADERLESS
+...
+#READ REPLICA
+->A copy of a database from which data may only be read.
+Two Options for communication between servers
+1.)Asynchronous(leader communicates with follower databases asynchronously to ensure changes are replicated).
+2.)Synchronous(Once the leader processes a write request, it could wait for the followers to replicate changes before doing anything else).
+#SHARDING
+This involves splitting the database into shards across multiple database servers. A word of caution with sharding: we want to avoid having a database hotspot, or a database server that becomes more frequently accessed than others. This could create an overload on that server.
+                                     #ACCESS CONTROL
+-> personally identifiable information (PII).
+->GRANT privilege,... TO user;
+->REVOKE privilege,... FROM user;
+                                   #SQL INJECTION ATTACKS
+One way to increase security of our database is to use access control and grant only the necessary privileges to each user. However, our applications that use an SQL database could also be exposed to attacks — one of them is an SQL injection attack.
+As the name indicates, this involves a malicious user injecting some SQL phrases to complete an existing query within our application in an undesirable way.
+#PREPARED STATEMENTS TO PREVENT SQL INJECTION ATTACKS.
+COMMAND=>
+PREPARE name FROM statement;
+example:
+A prepared statement is a statement in SQL that we can later insert values into. For the above query, we can write a prepared statement.
+PREPARE `balance_check`
+FROM 'SELECT * FROM `accounts`
+WHERE `id` = ?';
+The question mark in the prepared statement acts as a safeguard against the unintended execution of SQL code.
+To actually run this statement now and check someone’s balance, we accept user input as a variable and then plug it into the prepared statement.
+SET @id = 1;
+EXECUTE `balance_check` USING @id;
